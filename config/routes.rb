@@ -1,3 +1,12 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  root :to => 'pages#home'
+  resources :users
+  resources :busniesses
+
+  get '/login' => 'session#new'
+  post '/login' => 'session#create'
+  delete '/login' => 'session#destroy'
+
+  get '/busniess/invite/:id' => 'busniesses#invite', as: 'busniess_invite'
+  post '/busniess/invite/:id' => 'busniesses#invite'
 end

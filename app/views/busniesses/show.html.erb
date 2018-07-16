@@ -1,0 +1,20 @@
+<h1><%= @busniess.name %></h1>
+<% if @admin.present? %>
+  <p> You are admin, you can manage this busniess</p>
+  <ul>
+    <li>
+      <%= link_to 'Invite admin', controller: "busniesses", action: "invite", id: @busniess%>
+    </li>
+    <li>
+      <%= link_to 'Invite user to watch' %>
+    </li>
+    <li>
+      <%= link_to 'Remove this busniess' %>
+    </li>
+    <li>
+      <%= link_to 'Back', root_path %>
+    </li>
+  </ul>
+<% elsif %>
+  <p> You can only watch this busniess</p>
+<% end %>
