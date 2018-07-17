@@ -1,4 +1,7 @@
 <% if @current_user.present? %>
+  <h4 class=''>
+    <%= link_to 'Create Busniess', new_busniess_path %>
+  </h4>
   <h2>Admin Busniesses:</h2>
   <% @current_user.admins.each do |admin| %>
     <%= link_to (admin.find_busniess_name admin), busniess_path(admin.busniess_id) %>
@@ -9,5 +12,5 @@
   <% end %>
 
 <% else %>
-  <h1>Welcome to ReportConnect App</h1>
+  <h1>Welcome to BusniessConnect App</h1>
 <% end %>

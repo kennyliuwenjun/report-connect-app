@@ -14,7 +14,8 @@
       <nav>
         <%= link_to 'Home', root_path%> |
         <% if @current_user.present? %>
-          <%= link_to "Sign out [#{ @current_user.email }]", login_path, :method => 'delete'%>
+          <%= link_to "Sign out", login_path, :method => 'delete'%>
+          <a><%= @current_user.email %></a>
         <% else %>
           <%= link_to 'Sign up', new_user_path %>
           <%= link_to 'Sign in', login_path %>

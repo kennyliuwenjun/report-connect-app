@@ -3,18 +3,23 @@
   <p> You are admin, you can manage this busniess</p>
   <ul>
     <li>
-      <%= link_to 'Invite admin', controller: "busniesses", action: "invite", id: @busniess%>
+      <%= link_to 'Invite a user', controller: "busniesses", action: "invite", id: @busniess%>
     </li>
     <li>
-      <%= link_to 'Invite user to watch' %>
-    </li>
-    <li>
-      <%= link_to 'Remove this busniess' %>
+      <%= link_to 'Leave this busniess',busniess_path(@busniess.id), :method => 'delete'  %>
     </li>
     <li>
       <%= link_to 'Back', root_path %>
     </li>
   </ul>
 <% elsif %>
-  <p> You can only watch this busniess</p>
+  <p> You can only view this busniess</p>
+  <ul>
+    <li>
+      <%= link_to 'Leave this busniess',busniess_path(@busniess.id), :method => 'delete'  %>
+    </li>
+    <li>
+      <%= link_to 'Back', root_path %>
+    </li>
+  </ul>
 <% end %>

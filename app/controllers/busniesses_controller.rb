@@ -1,5 +1,5 @@
 class BusniessesController < ApplicationController
-  before_action :check_for_login, :only => [:show, :invite]
+  before_action :check_for_login, :only => [:show, :invite, :new, :create]
   before_action :check_for_access, :only => [:show, :invite]
   before_action :check_for_admin, :only => [:invite]
 
@@ -7,21 +7,57 @@ class BusniessesController < ApplicationController
     @busniess = Busniess.find params[:id]
   end
 
-  def invite
+  def invite   # (invite needs to simplfy)
     @busniess = Busniess.find params[:id]
-    user = User.find_by :email => params[:email]
-    if user.present? && flash[:add_admin_result]
-      flash[:add_admin_result] = 'succ'
+    if params[:email]  # check has email input
+      user = User.find_by :email => params[:email]
+      if user.present?
+        if params[:admin_box]
+          if user.is_admin(@busniess.id) # check if alrady a amin
+            flash[:invite_result] = 'Already an admin !'
+          else
+            user.add_to_admin(@busniess.id)
+            flash[:invite_result] = 'Successfully added!! (admin)'
+          end
+        else
+          if user.is_admin(@busniess.id) # check if alrady a amin
+            flash[:invite_result] = 'Already an admin !'
+          elsif user.is_watching(@busniess.id)
+            flash[:invite_result] = 'Already watching this busniess !'
+          else
+            user.add_to_watch(@busniess.id)
+            flash[:invite_result] = 'Successfully added!! (watching)'
+          end
+        end
+      elsif
+        flash[:invite_result] = 'User not found !'
+      end
       redirect_to busniess_invite_path(@busniess.id)
-    else
-      flash[:add_admin_result] = "fail to add user"
-      # redirect_to busniess_invite_path(@busniess.id)
     end
   end
 
+  def create
+    busniess = Busniess.create busniess_params
+    @current_user.add_to_admin(busniess.id)
+    redirect_to root_path
+  end
+
+  def new
+    @busniess = Busniess.new
+  end
+
+  def destroy
+    @current_user.leave_busniess(params[:id])
+    redirect_to root_path
+  end
+
   private
+  def busniess_params
+    params.require(:busniess).permit(:name)
+  end
+
   def check_for_access
-    @admin = Admin.find_by :user_id => session[:user_id], :busniess_id => params[:id] if session[:user_id].present?
+    @admin = Admin.find_by :user_id => @current_user.id, :busniess_id => params[:id] if @current_user.present?
     @watch = @current_user.busniesses.exists?(params[:id])
     redirect_to root_path unless @admin.present? || @watch.present?
   end

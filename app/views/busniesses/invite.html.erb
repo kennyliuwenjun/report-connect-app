@@ -1,10 +1,15 @@
 <h1><%= @busniess.name %></h1>
-<%= flash[:add_admin_result] %>
+
+<%= flash[:invite_result] %>
 
 <%= form_tag busniess_invite_path(@busniess.id) do %>
-  <%= label_tag :email  %>
-  <%= email_field_tag :email %>
-
-  <%= submit_tag "Invite" %>
+  <div>
+    <%= email_field_tag :email %>
+  </div>
+  <div>
+    <%= label_tag 'as admin' %>
+    <%= check_box_tag 'admin_box' %>
+    <%= submit_tag "Invite" %>
+  </div>
 <% end %>
 <%= link_to 'Back', busniess_path(@busniess.id) %>
