@@ -10,5 +10,6 @@
 
 class Busniess < ApplicationRecord
   has_many :admins
+  has_many :reports
   has_and_belongs_to_many :users
 end

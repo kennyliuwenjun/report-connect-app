@@ -23,3 +23,34 @@
     </li>
   </ul>
 <% end %>
+<table class="table table-striped table-hover table-sm">
+<thead>
+  <tr>
+    <th scope="col" style="width: 22%">Date</th>
+    <th scope="col" style="width: 22%">Sales</th>
+    <th scope="col" style="width: 22%">Expenses</th>
+    <th scope="col" style="width: 22%">Comments</th>
+    <% if @current_user.is_admin(@busniess.id) %>
+      <th scope="col" style="width: 14%">
+        <%= link_to 'Create', reports_new_path(@busniess.id) %>
+      </th>
+    <% end %>
+  </tr>
+</thead>
+<tbody>
+  <% @busniess.reports.sort_by(&:date).each do |report| %>
+    <tr>
+      <td><%= report.date %></td>
+      <td><%= '$'+report.sales.to_s if report.sales %></td>
+      <td><%= '$'+report.expenses.to_s if report.expenses %></td>
+      <td><%= report.comments %></td>
+      <% if @current_user.is_admin(@busniess.id) %>
+        <th>
+          <%= link_to 'Edit', update_report_path(@busniess.id,report.id) %> |
+          <%= link_to 'Delete', reports_delete_path(report), :method => 'delete', :data => {:confirm => 'Are you sure?'}  %>
+        </th>
+      <% end %>
+    </tr>
+  <% end %>
+</tbody>
+</table>

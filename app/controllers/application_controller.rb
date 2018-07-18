@@ -12,4 +12,14 @@ class ApplicationController < ActionController::Base
   def check_for_login
     redirect_to login_path unless @current_user.present?
   end
+
+  def check_for_access
+    @admin = Admin.find_by :user_id => @current_user.id, :busniess_id => (params[:id]||params[:busniess_id]) if @current_user.present?
+    @watch = @current_user.busniesses.exists?(params[:id]||params[:busniess_id])
+    redirect_to root_path unless @admin.present? || @watch.present?
+  end
+
+  def check_for_admin
+    redirect_to root_path unless @admin.present?
+  end
 end

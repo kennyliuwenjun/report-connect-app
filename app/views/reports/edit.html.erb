@@ -1,0 +1,19 @@
+<h1>Edit Report</h1>
+
+<%= form_for @report, :url => { :action => :update} do |p| %>
+  <%= p.label :date %>
+  <%= p.date_field :date %>
+
+  <%= p.label :sales %>
+  <%= p.number_field :sales, :step => 0.01 %>
+
+  <%= p.label :expenses%>
+  <%= p.number_field :expenses, :step => 0.01 %>
+
+  <%= p.label :comments %>
+  <%= p.text_field :comments %>
+
+  <%= p.submit %>
+<% end %>
+
+<%= link_to 'Back', busniess_path(@current_busniess.id) %>

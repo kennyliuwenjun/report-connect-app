@@ -3,6 +3,7 @@ class BusniessesController < ApplicationController
   before_action :check_for_access, :only => [:show, :invite]
   before_action :check_for_admin, :only => [:invite]
 
+
   def show
     @busniess = Busniess.find params[:id]
   end
@@ -54,15 +55,5 @@ class BusniessesController < ApplicationController
   private
   def busniess_params
     params.require(:busniess).permit(:name)
-  end
-
-  def check_for_access
-    @admin = Admin.find_by :user_id => @current_user.id, :busniess_id => params[:id] if @current_user.present?
-    @watch = @current_user.busniesses.exists?(params[:id])
-    redirect_to root_path unless @admin.present? || @watch.present?
-  end
-
-  def check_for_admin
-    redirect_to root_path unless @admin.present?
   end
 end

@@ -1,6 +1,10 @@
 <h1><%= @busniess.name %></h1>
 
-<%= flash[:invite_result] %>
+<% if flash[:invite_result] %>
+  <div class="alert alert-danger">
+    <%= flash[:invite_result]%>
+  </div>
+<% end %>
 
 <%= form_tag busniess_invite_path(@busniess.id) do %>
   <div>
