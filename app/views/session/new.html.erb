@@ -1,5 +1,6 @@
 <%= form_tag login_path, :class => 'form-signin' do %>
-  <h1 class="alert alert-dark text-center" >Log In</h1>
+  <%= image_tag 'ga_logo.png', :class => 'mb-4 login_logo'%>
+  <h1 class="h3 mb-3 font-weight-normal" >Please sign in</h1>
 
   <% if flash[:error] %>
     <div class="alert alert-danger text-center">
@@ -12,4 +13,5 @@
     <%= password_field_tag :password, nil , :class=>'form-control', :placeholder => 'Password' %>
 
   <%= submit_tag "Log In", :class => 'btn btn-lg btn-primary btn-block'%>
+  <p class="mt-5 mb-3 text-muted" >© 2018</p>
 <% end %>
