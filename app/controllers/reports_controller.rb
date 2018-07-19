@@ -20,7 +20,7 @@ class ReportsController < ApplicationController
 
   def create
     # check if report already exists
-    check_exist = Report.find_by :date => params['report']['date']
+    check_exist = Report.find_by :date => params['report']['date'], :business_id => @current_business.id
     if check_exist.present?
       params['report']['sales'] = check_exist.sales + params['report']['sales'].to_d
       params['report']['expenses'] = check_exist.expenses + params['report']['expenses'].to_d
