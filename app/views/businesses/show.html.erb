@@ -1,0 +1,44 @@
+<h1 class="alert alert-dark" ><%= @business.name %></h1>
+<% if @admin.present? %>
+  <p class="alert alert-success"> You are admin, you can manage this business</p>
+    <%= link_to 'Invite a user', {  controller: "businesses", action: "invite", id: @business}, :class=>'btn btn-primary btn-lg'%>
+    <%= link_to 'Leave this business',business_path(@business.id), :method => 'delete',:class=>'btn btn-primary btn-lg'   %>
+    <%= link_to 'Back', root_path,:class=>'btn btn-primary btn-lg'  %>
+<% elsif %>
+  <p class="alert alert-warning"> You can only view this business</p>
+    <%= link_to 'Leave this business',business_path(@business.id), :method => 'delete',:class=>'btn btn-primary btn-lg'  %>
+    <%= link_to 'Back', root_path,:class=>'btn btn-primary btn-lg' %>
+<% end %>
+<table class="table table-striped table-hover table-sm table_offset">
+<thead>
+  <tr>
+    <th scope="col" style="width: 22%">Date</th>
+    <th scope="col" style="width: 22%">Sales</th>
+    <th scope="col" style="width: 22%">Expenses</th>
+    <th scope="col" style="width: 22%">Comments</th>
+    <% if @current_user.is_admin(@business.id) %>
+      <th scope="col" style="width: 12%">
+        <%= link_to 'Create', reports_new_path(@business.id), :class => 'class="btn btn-primary'  %>
+      </th>
+    <% end %>
+  </tr>
+</thead>
+<tbody>
+  <% @business.reports.order(:date).each do |report| %>
+    <tr>
+      <td><%= report.date %></td>
+      <td><%= '$'+report.sales.to_s if report.sales %></td>
+      <td><%= '$'+report.expenses.to_s if report.expenses %></td>
+      <td><%= report.comments %></td>
+      <% if @current_user.is_admin(@business.id) %>
+        <th>
+          <%= link_to 'Edit', update_report_path(@business.id,report.id), :class => 'class="btn btn-primary' %>
+          <%= link_to 'Delete', reports_delete_path(report), :method => 'delete', :data => {:confirm => 'Are you sure?'}, :class=>'class="btn btn-secondary'  %>
+        </th>
+      <% end %>
+    </tr>
+  <% end %>
+</tbody>
+</table>
+
+<div id="chartContainer"><%= @chart.render() %></div>

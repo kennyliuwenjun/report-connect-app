@@ -20,6 +20,9 @@ live link: https://report-connect.herokuapp.com/
 - Ruby on Rails
 - Bootstrap
 
+## Built With
+test account: kenny1@ga.co password: chiken  
+
 ## Screenshots
 ![alt text](screenshots/table_example.jpg "An example of table")
 ![alt text](screenshots/chart_example.jpg "An example of chart")

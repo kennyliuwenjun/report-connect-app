@@ -1,20 +1,20 @@
 Rails.application.routes.draw do
   root :to => 'pages#home'
   resources :users
-  resources :busniesses
+  resources :businesses
 
   get '/login' => 'session#new'
   post '/login' => 'session#create'
   delete '/login' => 'session#destroy'
 
-  get '/busniess/invite/:id' => 'busniesses#invite', as: 'busniess_invite'
-  post '/busniess/invite/:id' => 'busniesses#invite'
+  get '/business/invite/:id' => 'businesses#invite', as: 'business_invite'
+  post '/business/invite/:id' => 'businesses#invite'
 
-  get '/busniess/:id/reports/new' => 'reports#new', as: 'reports_new'
-  get '/busniess/:busniess_id/reports/:report_id' => 'reports#edit', as: 'edit_report'
-  patch '/busniess/:busniess_id/reports/:report_id' => 'reports#update', as: 'update_report'
-  put '/busniess/:busniess_id/reports/:report_id' => 'reports#update'
+  get '/business/:id/reports/new' => 'reports#new', as: 'reports_new'
+  get '/business/:business_id/reports/:report_id' => 'reports#edit', as: 'edit_report'
+  patch '/business/:business_id/reports/:report_id' => 'reports#update', as: 'update_report'
+  put '/business/:business_id/reports/:report_id' => 'reports#update'
 
-  post '/busniess/:id/reports' => 'reports#create', as: 'reports_create'
+  post '/business/:id/reports' => 'reports#create', as: 'reports_create'
   delete '/reports/:id' => 'reports#destroy', as: 'reports_delete'
 end

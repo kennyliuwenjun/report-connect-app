@@ -12,5 +12,5 @@
 #
 
 class Report < ApplicationRecord
-  belongs_to :busniess, :optional => true
+  belongs_to :business, :optional => true
 end

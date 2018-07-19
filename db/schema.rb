@@ -17,25 +17,25 @@ ActiveRecord::Schema.define(version: 2018_07_17_045841) do
 
   create_table "admins", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "busniess_id"
+    t.integer "business_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id", "busniess_id"], name: "index_admins_on_user_id_and_busniess_id", unique: true
+    t.index ["user_id", "business_id"], name: "index_admins_on_user_id_and_business_id", unique: true
   end
 
-  create_table "busniesses", force: :cascade do |t|
+  create_table "businesses", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "busniesses_users", force: :cascade do |t|
+  create_table "businesses_users", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "busniess_id"
+    t.integer "business_id"
   end
 
   create_table "reports", force: :cascade do |t|
-    t.integer "busniess_id"
+    t.integer "business_id"
     t.date "date"
     t.money "sales", scale: 2
     t.money "expenses", scale: 2

@@ -1,6 +1,6 @@
-<h1 class="alert alert-dark" ><%= @busniess.name %></h1>
+<h1 class="alert alert-dark" ><%= @business.name %></h1>
 
-<%= form_tag busniess_invite_path(@busniess.id), :class => 'form-signin' do %>
+<%= form_tag business_invite_path(@business.id), :class => 'form-signin' do %>
   <% if flash[:invite_result] %>
     <div class="alert alert-danger">
       <%= flash[:invite_result]%>
@@ -14,5 +14,5 @@
     <%= check_box_tag 'admin_box', :class=>'form-control' %>
     <%= submit_tag "Invite", :class => 'btn btn-lg btn-primary btn-block' %>
   </div>
-  <%= link_to 'Back', busniess_path(@busniess.id), :class => 'btn btn-lg btn-primary btn-block' %>
+  <%= link_to 'Back', business_path(@business.id), :class => 'btn btn-lg btn-primary btn-block' %>
 <% end %>

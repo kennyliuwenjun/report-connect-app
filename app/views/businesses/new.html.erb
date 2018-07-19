@@ -1,0 +1,10 @@
+<%= form_for @business, :html => {:class => 'form-signin'}  do |f| %>
+  <h1 class="alert alert-dark text-center" >New business</h1>
+  <div class="form-group" >
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <%= f.submit 'Create', :class => 'btn btn-primary' %>
+  <%= link_to 'Back', root_path,:class=>'btn btn-primary'  %>
+<% end %>

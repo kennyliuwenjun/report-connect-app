@@ -14,8 +14,8 @@ class ApplicationController < ActionController::Base
   end
 
   def check_for_access
-    @admin = Admin.find_by :user_id => @current_user.id, :busniess_id => (params[:id]||params[:busniess_id]) if @current_user.present?
-    @watch = @current_user.busniesses.exists?(params[:id]||params[:busniess_id])
+    @admin = Admin.find_by :user_id => @current_user.id, :business_id => (params[:id]||params[:business_id]) if @current_user.present?
+    @watch = @current_user.businesses.exists?(params[:id]||params[:business_id])
     redirect_to root_path unless @admin.present? || @watch.present?
   end
 

@@ -4,18 +4,19 @@ u1 = User.create :email => 'kenny1@ga.co', :password => 'chiken'
 u2 = User.create :email => 'kenny2@ga.co', :password => 'chiken'
 u3 = User.create :email => 'kenny3@ga.co', :password => 'chiken'
 
-Busniess.destroy_all
-b1 = Busniess.create :name => 'KFC'
-b2 = Busniess.create :name => 'Dominos'
-b3 = Busniess.create :name => 'mcdonalds'
-b4 = Busniess.create :name => 'rebel'
-b5 = Busniess.create :name => 'GA'
-b6 = Busniess.create :name => 'apple'
-b7 = Busniess.create :name => 'facebook'
+Business.destroy_all
+b1 = Business.create :name => 'KFC'
+b2 = Business.create :name => 'Dominos'
+b3 = Business.create :name => 'mcdonalds'
+b4 = Business.create :name => 'rebel'
+b5 = Business.create :name => 'GA'
+b6 = Business.create :name => 'apple'
+b7 = Business.create :name => 'facebook'
 
 Admin.destroy_all
-a1 = Admin.create :user_id => u1.id, :busniess_id => b1.id
-a2 = Admin.create :user_id => u1.id, :busniess_id => b2.id
+a1 = Admin.create :user_id => u1.id, :business_id => b1.id
+a2 = Admin.create :user_id => u1.id, :business_id => b2.id
+a3 = Admin.create :user_id => u2.id, :business_id => b3.id
 
 Report.destroy_all
 r1 = Report.create :sales => 1000, :expenses => 200.11, :date => DateTime.new(2017,11,1)
@@ -31,4 +32,4 @@ r11 = Report.create :sales => 789, :expenses => 22.22, :date => DateTime.new(201
 r12 = Report.create :sales => 1000, :expenses => 2221.2, :date => DateTime.new(2018,7,19), :comments => 'purchases'
 
 b1.reports << r1 << r2 << r3 << r4 << r5 << r6 << r8 << r9 << r10 << r11 << r12
-u1.busniesses << b3
+u1.businesses << b3
