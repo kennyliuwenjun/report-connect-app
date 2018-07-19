@@ -1,16 +1,18 @@
 <% if @current_user.present? %>
   <h4 class=''>
-    <%= link_to 'Create Busniess', new_busniess_path %>
+    <%= link_to 'Create Busniess', new_busniess_path, :class =>'btn btn-primary btn-lg'  %>
   </h4>
-  <h2>Admin Busniesses:</h2>
-  <% @current_user.admins.each do |admin| %>
-    <%= link_to (admin.find_busniess_name admin), busniess_path(admin.busniess_id) %>
-  <% end %>
-  <h2>Watching Busniesses:</h2>
+  <h2 class="alert alert-dark busniess_title" >Admin Busniesses:</h2>
+  <div>
+    <% @current_user.admins.each do |admin| %>
+      <%= link_to (admin.find_busniess_name admin), busniess_path(admin.busniess_id), :class =>'tn btn-secondary btn-lg' %>
+    <% end %>
+  </div>
+  <h2 class="alert alert-dark busniess_title" >Watching Busniesses:</h2>
   <% @current_user.busniesses.each do |busniess| %>
-    <%= link_to busniess.name, busniess_path(busniess.id) %>
+    <%= link_to busniess.name, busniess_path(busniess.id), :class =>'tn btn-secondary btn-lg'  %>
   <% end %>
 
 <% else %>
-  <h1>Welcome to ReportConnect App</h1>
+  <h1 class="text-center">Welcome to ReportConnect App</h1>
 <% end %>

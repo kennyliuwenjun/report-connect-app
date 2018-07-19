@@ -1,18 +1,25 @@
-<h1>New Report</h1>
-<%= form_for @report, :url => { :action => :create} do |p| %>
-  <%= p.label :date %>
-  <%= p.date_field :date %>
+<%= form_for @report, :url => { :action => :create}, :html => {:class => 'form-signin'}  do |p| %>
+  <h1 class="alert alert-dark text-center"  >New Report</h1>
+  <div class="form-group" >
+    <%= p.label :date %>
+    <%= p.date_field :date, :value => Time.now.strftime('%Y-%m-%d') %>
+  </div>
 
-  <%= p.label :sales %>
-  <%= p.number_field :sales, :step => 0.01 %>
+  <div class="form-group" >
+    <%= p.label :sales %>
+    <%= p.number_field :sales, :step => 0.01 %>
+  </div>
 
-  <%= p.label :expenses%>
-  <%= p.number_field :expenses, :step => 0.01 %>
+  <div class="form-group" >
+    <%= p.label :expenses%>
+    <%= p.number_field :expenses, :step => 0.01 %>
+  </div>
 
-  <%= p.label :comments %>
-  <%= p.text_field :comments %>
+  <div class="form-group" >
+    <%= p.label :comments %>
+    <%= p.text_field :comments %>
+  </div>
 
-  <%= p.submit %>
+  <%= p.submit 'Create' , :class => 'btn btn-primary' %>
+  <%= link_to 'Back', busniess_path(@current_busniess.id), :class => 'btn btn-primary' %>
 <% end %>
-
-<%= link_to 'Back', busniess_path(@current_busniess.id) %>

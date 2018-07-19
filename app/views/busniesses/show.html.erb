@@ -1,19 +1,11 @@
-<h1><%= @busniess.name %></h1>
+<h1 class="alert alert-dark" ><%= @busniess.name %></h1>
 <% if @admin.present? %>
-  <p> You are admin, you can manage this busniess</p>
-  <ul>
-    <li>
-      <%= link_to 'Invite a user', controller: "busniesses", action: "invite", id: @busniess%>
-    </li>
-    <li>
-      <%= link_to 'Leave this busniess',busniess_path(@busniess.id), :method => 'delete'  %>
-    </li>
-    <li>
-      <%= link_to 'Back', root_path %>
-    </li>
-  </ul>
+  <p class="alert alert-success"> You are admin, you can manage this busniess</p>
+    <%= link_to 'Invite a user', {  controller: "busniesses", action: "invite", id: @busniess}, :class=>'btn btn-primary btn-lg'%>
+    <%= link_to 'Leave this busniess',busniess_path(@busniess.id), :method => 'delete',:class=>'btn btn-primary btn-lg'   %>
+    <%= link_to 'Back', root_path,:class=>'btn btn-primary btn-lg'  %>
 <% elsif %>
-  <p> You can only view this busniess</p>
+  <p class="alert alert-warning"> You can only view this busniess</p>
   <ul>
     <li>
       <%= link_to 'Leave this busniess',busniess_path(@busniess.id), :method => 'delete'  %>
@@ -23,7 +15,7 @@
     </li>
   </ul>
 <% end %>
-<table class="table table-striped table-hover table-sm">
+<table class="table table-striped table-hover table-sm table_offset">
 <thead>
   <tr>
     <th scope="col" style="width: 22%">Date</th>
@@ -31,14 +23,14 @@
     <th scope="col" style="width: 22%">Expenses</th>
     <th scope="col" style="width: 22%">Comments</th>
     <% if @current_user.is_admin(@busniess.id) %>
-      <th scope="col" style="width: 14%">
-        <%= link_to 'Create', reports_new_path(@busniess.id) %>
+      <th scope="col" style="width: 12%">
+        <%= link_to 'Create', reports_new_path(@busniess.id), :class => 'class="btn btn-primary'  %>
       </th>
     <% end %>
   </tr>
 </thead>
 <tbody>
-  <% @busniess.reports.sort_by(&:date).each do |report| %>
+  <% @busniess.reports.order(:date).each do |report| %>
     <tr>
       <td><%= report.date %></td>
       <td><%= '$'+report.sales.to_s if report.sales %></td>
@@ -46,11 +38,13 @@
       <td><%= report.comments %></td>
       <% if @current_user.is_admin(@busniess.id) %>
         <th>
-          <%= link_to 'Edit', update_report_path(@busniess.id,report.id) %> |
-          <%= link_to 'Delete', reports_delete_path(report), :method => 'delete', :data => {:confirm => 'Are you sure?'}  %>
+          <%= link_to 'Edit', update_report_path(@busniess.id,report.id), :class => 'class="btn btn-primary' %>
+          <%= link_to 'Delete', reports_delete_path(report), :method => 'delete', :data => {:confirm => 'Are you sure?'}, :class=>'class="btn btn-secondary'  %>
         </th>
       <% end %>
     </tr>
   <% end %>
 </tbody>
 </table>
+
+<div id="chartContainer"><%= @chart.render() %></div>

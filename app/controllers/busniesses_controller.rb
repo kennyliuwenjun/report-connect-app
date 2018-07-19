@@ -6,6 +6,56 @@ class BusniessesController < ApplicationController
 
   def show
     @busniess = Busniess.find params[:id]
+    reports = @busniess.reports.order(:date)
+    label_for_chart = reports.pluck_to_hash('date::date as label')
+    sales_for_chart = reports.pluck_to_hash('sales::decimal as value')
+    expenses_for_chart = reports.pluck_to_hash('expenses::decimal as value')
+    profits_for_chart = reports.pluck(:sales, :expenses)
+    profit = 0;
+    profits_for_chart.each_with_index do |val, index|
+      profit = profit + (val[0] ? val[0]:0) - (val[1] ? val[1]:0)
+      profits_for_chart[index] = {"value"=>profit}
+    end
+    p profits_for_chart
+    @chart = Fusioncharts::Chart.new({
+        :height => "100%",
+        :width => "100%",
+        :type => "mscombi2d",
+        :renderAt => "chartContainer",
+        :dataSource => "{
+              \"chart\":  {
+                \"caption\": \"#{@busniess.name}\",
+                \"xaxisname\": \"Date\",
+                \"yaxisname\": \"AUD\",
+                \"numberprefix\": \"$\",
+                \"theme\": \"ocean\",
+                \"exportEnabled\": \"1\"
+            },
+            \"categories\": [
+                {
+                    \"category\": #{label_for_chart.to_json}
+                }
+            ],
+            \"dataset\": [
+                {
+                    \"seriesname\": \"Sales\",
+                    \"data\": #{sales_for_chart.to_json}
+                },
+                {
+                    \"seriesname\": \"Expenses\",
+                    \"renderas\": \"line\",
+                    \"showvalues\": \"0\",
+                    \"data\": #{expenses_for_chart.to_json}
+                },
+                {
+                    \"seriesname\": \"Profit\",
+                    \"renderas\": \"area\",
+                    \"showvalues\": \"0\",
+                    \"data\": #{profits_for_chart.to_json}
+                }
+              ]
+            }"
+          })
   end
 
   def invite   # (invite needs to simplfy)
